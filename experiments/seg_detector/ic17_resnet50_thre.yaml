@@ -10,7 +10,7 @@ define:
             class: Builder
             model: SegDetectorModel
             model_args:
-                backbone: deformable_resnet50
+                backbone: resnet50
                 decoder: SegDetector
                 decoder_args: 
                     adaptive: True
@@ -29,7 +29,7 @@ define:
         data_loader: 
             class: DataLoader
             dataset: ^train_data
-            batch_size: 16
+            batch_size: 8
             num_workers: 50
         checkpoint: 
             class: Checkpoint
@@ -39,7 +39,7 @@ define:
         model_saver: 
             class: ModelSaver
             dir_path: model
-            save_interval: 18000
+            save_interval: 3000
             signal_path: save
         scheduler: 
             class: OptimizerScheduler

@@ -6,9 +6,9 @@ define:
   - name: train_data
     class: ImageDataset
     data_dir:
-        - 'C:/Users/User/Desktop/DB/datasets/ctw1500/'
+        - '/content/drive/MyDrive/DBnet/datasets/ctw1500/'
     data_list:
-        - 'C:/Users/User/Desktop/DB/datasets/ctw1500/train_list.txt'
+        - '/content/drive/MyDrive/DBnet/datasets/ctw1500/train_list.txt'
     processes:
         - class: AugmentDetectionData
           augmenter_args:
@@ -30,9 +30,9 @@ define:
   - name: validate_data
     class: ImageDataset
     data_dir:
-        - 'C:/Users/User/Desktop/DB/datasets/ctw1500/'
+        - '/content/drive/MyDrive/DBnet/datasets/ctw1500/'
     data_list:
-        - 'C:/Users/User/Desktop/DB/datasets/ctw1500/test_list.txt'
+        - '/content/drive/MyDrive/DBnet/datasets/ctw1500/test_list.txt'
     processes:
         - class: AugmentDetectionData
           augmenter_args:

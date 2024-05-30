@@ -57,7 +57,7 @@ class ImageDataset(data.Dataset, Configurable):
         res = []
         for gt in self.gt_paths:
             lines = []
-            reader = open(gt, 'r').readlines()
+            reader = open(gt, 'r', encoding="utf8").readlines()
             for line in reader:
                 item = {}
                 parts = line.strip().split(',')
@@ -81,7 +81,8 @@ class ImageDataset(data.Dataset, Configurable):
             index = index % self.num_samples
         data = {}
         image_path = self.image_paths[index]
-        img = cv2.imread(image_path, cv2.IMREAD_COLOR).astype('float32')
+        img = cv2.imread(image_path, cv2.IMREAD_COLOR)
+        img = np.float32(img)
         if self.is_training:
             data['filename'] = image_path
             data['data_id'] = image_path

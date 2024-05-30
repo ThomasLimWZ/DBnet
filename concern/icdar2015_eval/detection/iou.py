@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from collections import namedtuple
 import numpy as np
+import math
 from shapely.geometry import Polygon
 
 
@@ -181,10 +182,36 @@ class DetectionIoUEvaluator(object):
         numGlobalCareGt = 0
         numGlobalCareDet = 0
         matchedSum = 0
+        count = 0
+        sumOfMeanIou = []
         for result in results:
             numGlobalCareGt += result['gtCare']
             numGlobalCareDet += result['detCare']
             matchedSum += result['detMatched']
+            count += 1
+            
+            iou_matrix = np.array(result['iouMat'])
+            if iou_matrix.size == 0:  # Check for empty array
+                max_iou_per_row = np.array([])  
+                matched_gt_indices = np.array([])
+            else:
+                max_iou_per_row = np.max(iou_matrix, axis=1)
+                matched_gt_indices = np.argmax(iou_matrix, axis=1)
+            valid_matches = max_iou_per_row > 0
+            matched_ious = max_iou_per_row[valid_matches]
+            matched_gt_indices = matched_gt_indices[valid_matches]
+            mean_iou = 0 if math.isnan(np.mean(matched_ious)) else np.mean(matched_ious)
+            mean_iou = np.clip(mean_iou, 0, 1)
+            with open("./iou.txt", "a") as file:
+                if(count == 1):
+                    file.write("\n")
+                file.write(f"Mean IoU of matched pairs (excluding no-overlap) - {count} : {mean_iou}\n")
+
+            sumOfMeanIou.append(mean_iou)
+
+        averageIouOfWholeSet = sum(map(float, sumOfMeanIou)) / count
+        with open("./iou.txt", "a") as file:
+                file.write(f"Average IoU of testing set : {averageIouOfWholeSet}\n")
 
         methodRecall = 0 if numGlobalCareGt == 0 else float(
             matchedSum)/numGlobalCareGt
@@ -194,7 +221,9 @@ class DetectionIoUEvaluator(object):
             methodRecall * methodPrecision / (methodRecall + methodPrecision)
 
         methodMetrics = {'precision': methodPrecision,
-                         'recall': methodRecall, 'hmean': methodHmean}
+                         'recall': methodRecall, 
+                         'hmean': methodHmean,
+                         'avgIou': averageIouOfWholeSet}
 
         return methodMetrics
 
