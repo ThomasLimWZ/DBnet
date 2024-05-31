@@ -2,6 +2,7 @@ import cv2
 import concern.webcv2 as webcv2
 import numpy as np
 import torch
+import easyocr
 
 from concern.config import Configurable, State
 from data.processes.make_icdar_data import MakeICDARData
@@ -95,6 +96,7 @@ class SegDetectorVisualizer(Configurable):
         original_shape = original_image.shape
         pred_canvas = original_image.copy().astype(np.uint8)
         pred_canvas = cv2.resize(pred_canvas, (original_shape[1], original_shape[0]))
+        reader = easyocr.Reader(['en'])
 
         for idx, box in enumerate(boxes):
             box = np.array(box).astype(np.int32).reshape(-1, 2)
@@ -108,5 +110,11 @@ class SegDetectorVisualizer(Configurable):
             crop_img = original_image[y_min:y_max, x_min:x_max]
             cv2.imwrite('demo_results/'+image_path.split('/')[-1].split('.')[0]+'_'+str(idx)+'.jpg', crop_img)
 
-        return pred_canvas
+            result = reader.readtext('demo_results/'+image_path.split('/')[-1].split('.')[0]+'_'+str(idx)+'.jpg', detail=0)
+            print(result)
+            with open("demo_results/recognized.txt", "a") as file:
+                if(idx == 0):
+                    file.write("\n")
+                file.write(f"{image_path.split('/')[-1].split('.')[0]+'_'+str(idx)+'.jpg'} - {result}\n")
 
+        return pred_canvas
