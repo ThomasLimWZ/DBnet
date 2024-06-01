@@ -40,7 +40,6 @@ class SegDetectorVisualizer(Configurable):
             pred_image = pred_image.astype(np.uint8)
         return pred_image
 
-
     def single_visualize(self, batch, index, boxes, pred):
         image = batch['image'][index]
         polygons = batch['polygons'][index]

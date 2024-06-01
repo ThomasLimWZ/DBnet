@@ -187,7 +187,8 @@ class Eval:
                         vis_images.update(vis_image)
                 metrics = self.structure.measurer.gather_measure(raw_metrics, self.logger)
                 for key, metric in metrics.items():
-                    self.logger.info('%s : %f (%d)' % (key, metric.avg, metric.count))
+                    if metric != 0:
+                        self.logger.info('%s : %f (%d)' % (key, metric.avg, metric.count))
 
 if __name__ == '__main__':
     main()

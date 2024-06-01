@@ -208,10 +208,11 @@ class DetectionIoUEvaluator(object):
                 file.write(f"Mean IoU of matched pairs (excluding no-overlap) - {count} : {mean_iou}\n")
 
             sumOfMeanIou.append(mean_iou)
-
-        averageIouOfWholeSet = sum(map(float, sumOfMeanIou)) / count
-        with open("./iou.txt", "a") as file:
-                file.write(f"Average IoU of testing set : {averageIouOfWholeSet}\n")
+        
+        averageIouOfWholeSet = 0 if count == 0 else sum(map(float, sumOfMeanIou)) / count
+        if (count != 0):
+            with open("./iou.txt", "a") as file:
+                    file.write(f"Average IoU of testing set : {averageIouOfWholeSet}\n")
 
         methodRecall = 0 if numGlobalCareGt == 0 else float(
             matchedSum)/numGlobalCareGt

@@ -292,7 +292,7 @@ def resnet50(pretrained=True, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
     if pretrained:
         model.load_state_dict(model_zoo.load_url(
-            model_urls['resnet50'], map_location=torch.device('cpu')), strict=False)
+            model_urls['resnet50'], map_location=torch.device('cuda')), strict=False)
     return model
 
 
@@ -309,7 +309,7 @@ def deformable_resnet50(pretrained=True, **kwargs):
                    **kwargs)
     if pretrained:
         model.load_state_dict(model_zoo.load_url(
-            model_urls['resnet50'], map_location=torch.device('cpu')), strict=False)
+            model_urls['resnet50'], map_location=torch.device('cuda')), strict=False)
     return model
 
 

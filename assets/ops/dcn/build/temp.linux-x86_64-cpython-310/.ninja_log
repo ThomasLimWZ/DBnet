@@ -1,0 +1,5 @@
+# ninja log v5
+64	28540	1717229231000000000	/content/drive/MyDrive/DBnet/assets/ops/dcn/build/temp.linux-x86_64-cpython-310/src/deform_conv_cuda_kernel.o	efcad55f8ba1fd5
+63	35200	1717229237000000000	/content/drive/MyDrive/DBnet/assets/ops/dcn/build/temp.linux-x86_64-cpython-310/src/deform_conv_cuda.o	1702d3fc2c2ef0ed
+10	26797	1717229267000000000	/content/drive/MyDrive/DBnet/assets/ops/dcn/build/temp.linux-x86_64-cpython-310/src/deform_pool_cuda_kernel.o	bd666c6a196c7609
+10	30565	1717229270000000000	/content/drive/MyDrive/DBnet/assets/ops/dcn/build/temp.linux-x86_64-cpython-310/src/deform_pool_cuda.o	de02373189462728

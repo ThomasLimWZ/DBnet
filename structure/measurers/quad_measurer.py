@@ -62,12 +62,12 @@ class QuadMeasurer(Configurable):
         fmeasure = AverageMeter()
         avgIou = AverageMeter()
 
-        precision.update(result['precision'], n=len(raw_metrics))
-        recall.update(result['recall'], n=len(raw_metrics))
-        fmeasure_score = 2 * precision.val * recall.val /\
+        precision = 0 if result['precision'] == 0 else precision.update(result['precision'], n=len(raw_metrics))
+        recall = 0 if result['recall'] == 0 else recall.update(result['recall'], n=len(raw_metrics))
+        fmeasure_score = 0 if precision == 0 and recall == 0 else 2 * precision.val * recall.val /\
             (precision.val + recall.val + 1e-8)
-        fmeasure.update(fmeasure_score)
-        avgIou.update(result['avgIou'], n=len(raw_metrics))
+        fmeasure = 0 if fmeasure_score == 0 else fmeasure.update(fmeasure_score)
+        avgIou = 0 if result['avgIou'] == 0 else avgIou.update(result['avgIou'], n=len(raw_metrics))
 
         return {
             'precision': precision,
