@@ -1,5 +1,3 @@
-## Installation
-
 ## Requirements:
 Use T4/A100 runtime in Google Colab, because it requires GPU to run the code.
 - Python3
