@@ -45,11 +45,14 @@ There are some files might need to modify the path to run the code (You may use 
 ```
 
 ## SynthText Pre-trained model
+```
 ├── trained_models
 │   ├── pre-trained-model-synthtext-resnet50   -- used to finetune models, not for evaluation
+```
 
 ## Datasets
 The root of the dataset directory is in ```datasets/```.
+```
 ├── datasets
 │   ├── totaltext
 │   │   ├── train_images
@@ -72,6 +75,7 @@ The root of the dataset directory is in ```datasets/```.
 │   │   └── test_gts
 │   │   └── test_list.txt
 │   │   └── train_list.txt
+```
 The data root directory and the data list file can be defined in ```base_totaltext.yaml```
 
 ## Config file
@@ -80,6 +84,7 @@ The data root directory and the data list file can be defined in ```base_totalte
 ## Training
 Check the paths of data_dir and data_list in the base_*.yaml file. For better performance, you can first per-train the model with SynthText and then fine-tune it with the specific real-world dataset.
 During the training process, it will generates several items and save in ```outputs/workspace/DBnet/deformable_resnet50/L1BalanceCELoss``` or ```outputs/workspace/DBnet/resnet50/L1BalanceCELoss``` directory.
+```
 ├── model      # Checkpoint stores every specific iterations
 │   ├── final
 │   ├── ...
@@ -93,6 +98,7 @@ During the training process, it will generates several items and save in ```outp
 ├── iter
 ├── metrics.log
 ├── output.log  # Store the code ran previously
+```
 
 ```
 !python train.py experiments/seg_detector/totaltext_resnet50_deform_thre.yaml
@@ -140,6 +146,7 @@ Run the model inference with a single image. Here is an example:
 ```!python demo.py experiments/seg_detector/ic17_resnet50_deform_thre.yaml --image_path images/starbucks.jpg --resume workspace/SegDetectorModel-seg_detector/deformable_resnet50/L1BalanceCELoss/ic17/model/final --box_thresh 0.55 --polygon --visualize```
 
 The results can be find in `demo_results`.
+```
 ├── starbucks.jpg
 ├── res_starbucks.txt
 ├── starbucks_0.jpg  # Extract out each detected text before bounding box generated
@@ -147,3 +154,4 @@ The results can be find in `demo_results`.
 ├── recognized.txt   # Stores the text recognized by EasyOCR library with the probabilty
 │   ├── starbucks_0.jpg ~ Text: CNFE, Probability: 0.09245385229587555
 │   ├── starbucks_1.jpg ~ Text: STAucrs, Probability: 0.0687920127407071
+```
